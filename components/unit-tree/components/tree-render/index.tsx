@@ -5,6 +5,7 @@ import {
   useMapTree,
 } from "@/hooks";
 import UnitSection from "../unit-section";
+import { memo } from "react";
 
 const TreeRender = () => {
   const searchParams = useSearchParams();
@@ -34,4 +35,4 @@ const TreeRender = () => {
   );
 };
 
-export default TreeRender;
+export default memo(TreeRender);

@@ -23,7 +23,7 @@ export default function useMapTree({
       mappedHash[asset.id] = {
         ...asset,
         children: [],
-        typeHash: "asset",
+        typeHash: asset?.sensorType ? "component" : "asset",
       };
     }
 
