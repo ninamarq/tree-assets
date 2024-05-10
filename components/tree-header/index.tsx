@@ -56,6 +56,7 @@ const TreeHeader = () => {
         alignItems: "center",
         backgroundColor: "var(--main-header-background)",
         padding: "16px",
+        gap: "16px",
       }}
     >
       <Image
