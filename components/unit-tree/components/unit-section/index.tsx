@@ -5,12 +5,16 @@ import LocationUnit from "../location-unit";
 import AssetUnit from "../asset-unit";
 import ComponentUnit from "../component-unit";
 import { IAsset, ILocation } from "@/types";
+import { useSearchParams } from "next/navigation";
 
 interface IUnitSectionProps {
   unit: ILocation | IAsset;
 }
 
 const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
+  const searchParams = useSearchParams();
+  const filterInput = searchParams.get("filterInput") || "";
+
   const [isChildrenVisible, setIsChildrenVisible] = useState<boolean>(false);
   const hasChildren = props.unit?.children?.length > 0;
   const typeHashRender = {
@@ -23,7 +27,7 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
     if (props.unit.isOpened) {
       setIsChildrenVisible(true);
     }
-  }, [props.unit.isOpened]);
+  }, [filterInput]);
 
   return (
     <div
