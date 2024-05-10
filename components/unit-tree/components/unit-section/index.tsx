@@ -36,6 +36,7 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "flex-start",
+        width: "100%",
         gap: "4px",
       }}
     >
@@ -45,6 +46,7 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
           alignItems: "center",
           justifyContent: "flex-start",
           gap: "8px",
+          width: "100%",
         }}
       >
         {hasChildren && (
@@ -70,6 +72,7 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
             alignItems: "flex-start",
             justifyContent: "center",
             gap: "8px",
+            width: "100%",
             padding: "8px 0 8px 24px",
           }}
         >

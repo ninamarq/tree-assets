@@ -78,7 +78,7 @@ const TreeRender = () => {
   }, [assets, locations, tree, filterInput]);
 
   return (
-    <section
+    <div
       style={{
         display: "flex",
         flexDirection: "column",
@@ -113,7 +113,7 @@ const TreeRender = () => {
           <UnitSection key={value?.id} unit={value} />
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 
