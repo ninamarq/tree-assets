@@ -1,3 +1,4 @@
+import { IAsset, ILocation } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useMapTree({
@@ -6,8 +7,8 @@ export default function useMapTree({
   assets,
 }: {
   currentCompanyId: string;
-  locations: any;
-  assets: any;
+  locations: Array<ILocation>;
+  assets: Array<IAsset>;
 }) {
   const getMappedTree = () => {
     const mappedHash: Record<string, any> = {};

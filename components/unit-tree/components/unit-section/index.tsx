@@ -1,35 +1,22 @@
 import React, { memo, useState } from "react";
-import LocationIcon from "@/assets/location.svg";
-import AssetsIcon from "@/assets/assets.svg";
 import Arrow from "@/assets/down-arrow.svg";
 import Image from "next/image";
+import LocationUnit from "../location-unit";
+import AssetUnit from "../asset-unit";
+import ComponentUnit from "../component-unit";
+import { IAsset, ILocation } from "@/types";
 
 interface IUnitSectionProps {
-  unit: any;
+  unit: ILocation | IAsset;
 }
 
 const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
   const [isChildrenVisible, setIsChildrenVisible] = useState<boolean>(false);
   const hasChildren = props.unit?.children?.length > 0;
-  const iconHash = {
-    location: (
-      <Image
-        alt="Location icon"
-        src={LocationIcon}
-        width={16}
-        loading="eager"
-        priority
-      />
-    ),
-    asset: (
-      <Image
-        alt="Asset icon"
-        src={AssetsIcon}
-        width={16}
-        loading="eager"
-        priority
-      />
-    ),
+  const typeHashRender = {
+    location: () => <LocationUnit location={props.unit as ILocation} />,
+    asset: () => <AssetUnit asset={props.unit as IAsset} />,
+    component: () => <ComponentUnit component={props.unit as IAsset} />,
   };
 
   return (
@@ -52,7 +39,7 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
       >
         {hasChildren && (
           <Image
-            alt="Location icon"
+            alt="Arrow drop children icon"
             src={Arrow}
             onClick={() => setIsChildrenVisible((prevState) => !prevState)}
             width={12}
@@ -63,8 +50,7 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
             }}
           />
         )}
-        {iconHash[props.unit.typeHash]}
-        {props.unit.name}
+        {typeHashRender[props.unit.typeHash]()}
       </div>
       {isChildrenVisible && (
         <div
@@ -78,7 +64,7 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
           }}
         >
           {hasChildren &&
-            props.unit?.children?.map((child: any) => (
+            props.unit?.children?.map((child) => (
               <UnitSection key={child.id} unit={child} />
             ))}
         </div>
