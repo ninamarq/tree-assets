@@ -7,11 +7,12 @@ export default function useMapTree({
   assets,
 }: {
   currentCompanyId: string;
-  locations: Array<ILocation>;
-  assets: Array<IAsset>;
+  locations?: Array<ILocation>;
+  assets?: Array<IAsset>;
 }) {
   const getMappedTree = () => {
-    const mappedHash: Record<string, any> = {};
+    if (!locations || !assets) return {};
+    const mappedHash: Record<string, IAsset> = {};
 
     for (const location of locations) {
       mappedHash[location.id] = {
@@ -43,11 +44,6 @@ export default function useMapTree({
         if (currentLocation) {
           currentLocation.children?.push(currentUnit);
         }
-      }
-    }
-    for (const unit in mappedHash) {
-      if (mappedHash[unit].parentId || mappedHash[unit].locationId) {
-        delete mappedHash[unit];
       }
     }
 
