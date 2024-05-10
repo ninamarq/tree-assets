@@ -4,9 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 const FilterInput = () => {
-  const { setSearchParam } = useSetSearchParamsQuery();
   const searchParams = useSearchParams();
-  const companyId = searchParams.get("companyId") || "";
+  const { setSearchParam } = useSetSearchParamsQuery();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -18,15 +17,14 @@ const FilterInput = () => {
   );
 
   useEffect(() => {
-    setSearchParam("filterInput", "");
-
-    const input = document.getElementById(
-      "input-filter-tree"
-    ) as HTMLInputElement;
-    if (input?.value) {
-      input.value = "";
+    const filterInputValue = searchParams.get("filterInput");
+    if (filterInputValue) {
+      const input = document.getElementById(
+        "input-filter-tree"
+      ) as HTMLInputElement;
+      input.value = filterInputValue;
     }
-  }, [companyId]);
+  }, []);
 
   return (
     <input

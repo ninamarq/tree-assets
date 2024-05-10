@@ -17,8 +17,16 @@ export default function useSetSearchParamsQuery() {
     const params = new URLSearchParams(searchParams.toString());
     params.set("companyId", company.id);
     params.set("companyName", company.name);
-    const NEW_URL = `${pathname}?${params.toString()}`;
+    params.set("filterInput", "");
 
+    const input = document.getElementById(
+      "input-filter-tree"
+    ) as HTMLInputElement;
+    if (input?.value) {
+      input.value = "";
+    }
+
+    const NEW_URL = `${pathname}?${params.toString()}`;
     router.push(NEW_URL);
   };
 
