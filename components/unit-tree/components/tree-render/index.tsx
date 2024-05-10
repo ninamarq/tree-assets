@@ -3,17 +3,15 @@ import {
   useGetCompanyAssets,
   useGetCompanyAssetsLocations,
   useMapTree,
-  useSetSearchParamsQuery,
 } from "@/hooks";
 import UnitSection from "../unit-section";
 import SearchIcon from "@/assets/search.svg";
-import { memo, useEffect, useMemo } from "react";
+import { memo, useMemo } from "react";
 import Image from "next/image";
 import { IAsset } from "@/types";
-import { debounce } from "@/utils";
+import FilterInput from "../filter-input";
 
 const TreeRender = () => {
-  const { setSearchParam } = useSetSearchParamsQuery();
   const searchParams = useSearchParams();
   const companyId = searchParams.get("companyId") || "";
   const filterInput = searchParams.get("filterInput") || "";
@@ -79,27 +77,6 @@ const TreeRender = () => {
     return treeCopy;
   }, [assets, locations, tree, filterInput]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    if (!value) return;
-    setSearchParam("filterInput", value);
-  };
-  const handleInputChangeDebounced = debounce(
-    handleInputChange as () => void,
-    500
-  );
-
-  useEffect(() => {
-    setSearchParam("filterInput", "");
-
-    const input = document.getElementById(
-      "input-filter-tree"
-    ) as HTMLInputElement;
-    if (input?.value) {
-      input.value = "";
-    }
-  }, [companyId]);
-
   return (
     <section
       style={{
@@ -119,16 +96,7 @@ const TreeRender = () => {
           padding: "12px",
         }}
       >
-        <input
-          type="text"
-          onChange={handleInputChangeDebounced}
-          placeholder="Buscar Ativo ou Local"
-          style={{
-            width: "100%",
-            border: "none",
-            padding: "8px",
-          }}
-        />
+        <FilterInput />
         <Image src={SearchIcon} alt="Search filter icon" width={16} />
       </div>
       <div
