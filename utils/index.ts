@@ -1,3 +1,5 @@
+import { SensorIcon } from "./sensorIcon";
+
 const debounce = (callback: () => void, delay: number) => {
   let timeoutId: string | number | NodeJS.Timeout | undefined;
   return (...args: any) => {
@@ -6,4 +8,4 @@ const debounce = (callback: () => void, delay: number) => {
   };
 };
 
-export { debounce };
+export { debounce, SensorIcon };
