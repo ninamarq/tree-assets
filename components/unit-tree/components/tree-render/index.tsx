@@ -3,18 +3,21 @@ import {
   useGetCompanyAssets,
   useGetCompanyAssetsLocations,
   useMapTree,
+  useSetSearchParamsQuery,
 } from "@/hooks";
 import UnitSection from "../unit-section";
 import SearchIcon from "@/assets/search.svg";
-import { memo, useMemo, useState } from "react";
+import { memo, useEffect, useMemo } from "react";
 import Image from "next/image";
-import { IAsset, ILocation } from "@/types";
+import { IAsset } from "@/types";
+import { debounce } from "@/utils";
 
 const TreeRender = () => {
-  const [filter, setFilter] = useState<string>("");
-
+  const { setSearchParam } = useSetSearchParamsQuery();
   const searchParams = useSearchParams();
   const companyId = searchParams.get("companyId") || "";
+  const filterInput = searchParams.get("filterInput") || "";
+
   const { data: locations } = useGetCompanyAssetsLocations(companyId);
   const { data: assets } = useGetCompanyAssets(companyId);
   const { data: tree } = useMapTree({
@@ -25,8 +28,12 @@ const TreeRender = () => {
 
   const getParentPrior = (parent?: IAsset): Partial<IAsset | undefined> => {
     if (!parent?.id) return {};
+    if (tree?.[parent?.id]) {
+      tree[parent.id].isOpened = true;
+    }
+
     if (!parent?.parentId && !parent?.locationId) {
-      return { [parent.id]: parent };
+      return { [parent.id]: { ...parent, isOpened: true } };
     }
 
     if (parent?.parentId) {
@@ -48,16 +55,16 @@ const TreeRender = () => {
   const filteredTree = useMemo(() => {
     const treeCopy = { ...tree };
 
-    if (filter) {
+    if (filterInput) {
       const filteredLocation = locations?.find((location) =>
-        location.name.toLowerCase().includes(filter.toLowerCase())
+        location.name.toLowerCase().includes(filterInput.toLowerCase())
       );
       if (filteredLocation && tree?.[filteredLocation?.id]) {
         return findLocationOrAsset(filteredLocation);
       }
 
       const filteredAsset = assets?.find((asset) =>
-        asset.name.toLowerCase().includes(filter.toLowerCase())
+        asset.name.toLowerCase().includes(filterInput.toLowerCase())
       );
       if (filteredAsset && tree?.[filteredAsset?.id]) {
         return findLocationOrAsset(filteredAsset);
@@ -70,23 +77,28 @@ const TreeRender = () => {
       }
     }
     return treeCopy;
-  }, [assets, filter, locations, tree]);
+  }, [assets, locations, tree, filterInput]);
 
-  const debounce = (callback: () => void, delay: number) => {
-    let timeoutId: string | number | NodeJS.Timeout | undefined;
-    return (...args: any) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => callback.apply(this, args), delay);
-    };
-  };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    setFilter(value);
+    if (!value) return;
+    setSearchParam("filterInput", value);
   };
   const handleInputChangeDebounced = debounce(
     handleInputChange as () => void,
     500
   );
+
+  useEffect(() => {
+    setSearchParam("filterInput", "");
+
+    const input = document.getElementById(
+      "input-filter-tree"
+    ) as HTMLInputElement;
+    if (input?.value) {
+      input.value = "";
+    }
+  }, [companyId]);
 
   return (
     <section
@@ -130,11 +142,7 @@ const TreeRender = () => {
         }}
       >
         {Object.values(filteredTree || {})?.map((value) => (
-          <UnitSection
-            key={value?.id}
-            unit={value}
-            needChildrenOpen={filter?.length > 0}
-          />
+          <UnitSection key={value?.id} unit={value} />
         ))}
       </div>
     </section>

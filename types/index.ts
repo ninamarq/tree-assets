@@ -13,6 +13,7 @@ interface ILocation {
   parentId: string | null;
   typeHash: TTypeHash;
   children: Array<ILocation | IAsset>;
+  isOpened?: boolean;
 }
 
 interface IAsset {
@@ -25,6 +26,7 @@ interface IAsset {
   gatewayId?: string | null;
   locationId?: string | null;
   typeHash: TTypeHash;
+  isOpened?: boolean;
   children: Array<ILocation | IAsset>;
 }
 

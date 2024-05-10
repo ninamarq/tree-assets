@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Arrow from "@/assets/down-arrow.svg";
 import Image from "next/image";
 import LocationUnit from "../location-unit";
@@ -18,6 +18,12 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
     asset: () => <AssetUnit asset={props.unit as IAsset} />,
     component: () => <ComponentUnit component={props.unit as IAsset} />,
   };
+
+  useEffect(() => {
+    if (props.unit.isOpened) {
+      setIsChildrenVisible(true);
+    }
+  }, [props.unit.isOpened]);
 
   return (
     <div
@@ -52,7 +58,7 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
         )}
         {typeHashRender[props.unit.typeHash]()}
       </div>
-      {isChildrenVisible && (
+      {hasChildren && isChildrenVisible && (
         <div
           style={{
             display: "flex",
@@ -63,10 +69,9 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
             padding: "8px 0 8px 24px",
           }}
         >
-          {hasChildren &&
-            props.unit?.children?.map((child) => (
-              <UnitSection key={child.id} unit={child} />
-            ))}
+          {props.unit?.children?.map((child) => (
+            <UnitSection key={child.id} unit={child} />
+          ))}
         </div>
       )}
     </div>

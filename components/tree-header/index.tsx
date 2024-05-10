@@ -1,26 +1,16 @@
 import Image from "next/image";
-import { useGetCompanies } from "@/hooks";
+import { useGetCompanies, useSetSearchParamsQuery } from "@/hooks";
 import TractianLogo from "@/assets/tractian.svg";
 import { useEffect, useMemo } from "react";
 import { CompanyCard } from "@/components";
-import { ICompany } from "@/types";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const TreeHeader = () => {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
 
+  const { updateHeaderParams } = useSetSearchParamsQuery();
   const { data: companies, isFetching } = useGetCompanies();
 
-  const handleCompanySelect = (company: ICompany) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("companyId", company.id);
-    params.set("companyName", company.name);
-    const NEW_URL = `${pathname}?${params.toString()}`;
-
-    router.push(NEW_URL);
-  };
   const renderCompaniesData = useMemo(() => {
     if (isFetching) {
       return (
@@ -43,7 +33,7 @@ const TreeHeader = () => {
         <CompanyCard
           key={company.id}
           company={company}
-          handleSelectCompany={handleCompanySelect}
+          handleSelectCompany={updateHeaderParams}
         />
       ));
     }
@@ -53,9 +43,8 @@ const TreeHeader = () => {
 
   useEffect(() => {
     if (!companies || companies?.length === 0) return;
-
     if (!searchParams.get("companyId")) {
-      handleCompanySelect(companies[0]);
+      updateHeaderParams(companies[0]);
     }
   }, [companies]);
 
