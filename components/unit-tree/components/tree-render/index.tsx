@@ -20,7 +20,7 @@ const TreeRender = () => {
 
   const { data: locations } = useGetCompanyAssetsLocations(companyId);
   const { data: assets } = useGetCompanyAssets(companyId);
-  const { data: tree } = useMapTree({
+  const { data: tree, isPending } = useMapTree({
     locations,
     assets,
     currentCompanyId: companyId,
@@ -95,9 +95,22 @@ const TreeRender = () => {
           border: "1px solid var(--gray-150)",
         }}
       >
-        {Object.values(filteredAssetsAndLocationsTree || {})?.map((value) => (
-          <UnitSection key={value?.id} unit={value} />
-        ))}
+        {isPending ? (
+          <span
+            style={{
+              backgroundColor: "var(--gray-150)",
+              padding: "16px",
+              borderRadius: "2px",
+              width: "100%",
+              height: "100%",
+              animation: "shimmer 2s infinite",
+            }}
+          />
+        ) : (
+          Object.values(filteredAssetsAndLocationsTree || {})?.map((value) => (
+            <UnitSection key={value?.id} unit={value} />
+          ))
+        )}
       </div>
     </div>
   );

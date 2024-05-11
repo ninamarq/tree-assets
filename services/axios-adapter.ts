@@ -2,7 +2,7 @@ import { companiesMock, assetsMock, locationsMock } from "@/mocks";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
-const mock = new MockAdapter(axios, { delayResponse: 1000 });
+const mock = new MockAdapter(axios, { delayResponse: 1500 });
 
 type TMockKeyType = "companies" | "assets" | "locations";
 const mockList: Record<TMockKeyType, any> = {
