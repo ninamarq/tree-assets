@@ -1,9 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import Arrow from "@/assets/down-arrow.svg";
 import Image from "next/image";
-import LocationUnit from "../location-unit";
-import AssetUnit from "../asset-unit";
-import ComponentUnit from "../component-unit";
+import { LocationUnit, AssetUnit, ComponentUnit } from "./components";
 import { IAsset, ILocation } from "@/types";
 import { useSearchParams } from "next/navigation";
 
