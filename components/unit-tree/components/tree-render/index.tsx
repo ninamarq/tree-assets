@@ -15,6 +15,8 @@ const TreeRender = () => {
   const searchParams = useSearchParams();
   const companyId = searchParams.get("companyId") || "";
   const filterInput = searchParams.get("filterInput") || "";
+  const statusFilter = searchParams.get("status") || "";
+  const sensorTypeFilter = searchParams.get("sensorType") || "";
 
   const { data: locations } = useGetCompanyAssetsLocations(companyId);
   const { data: assets } = useGetCompanyAssets(companyId);
@@ -25,24 +27,41 @@ const TreeRender = () => {
   });
 
   const filteredAssetsAndLocationsTree = useMemo(() => {
-    const treeCopy = { ...tree };
+    let filteredTree = { ...tree };
+
+    if (statusFilter) {
+      for (const unit in filteredTree) {
+        if (filteredTree[unit]?.status !== statusFilter) {
+          delete filteredTree[unit];
+        }
+      }
+    }
+    if (sensorTypeFilter) {
+      for (const unit in filteredTree) {
+        if (filteredTree[unit]?.sensorType !== sensorTypeFilter) {
+          delete filteredTree[unit];
+        }
+      }
+    }
 
     if (filterInput) {
       return filterAssetsAndLocationsByFilterInput({
         assets,
         locations,
-        tree,
+        tree: filteredTree,
         filterInput,
       });
     }
 
-    for (const unit in treeCopy) {
-      if (treeCopy[unit].parentId || treeCopy[unit].locationId) {
-        delete treeCopy[unit];
+    if (!sensorTypeFilter && !statusFilter) {
+      for (const unit in filteredTree) {
+        if (filteredTree[unit].parentId || filteredTree[unit].locationId) {
+          delete filteredTree[unit];
+        }
       }
     }
-    return treeCopy;
-  }, [assets, locations, tree, filterInput]);
+    return filteredTree;
+  }, [assets, locations, tree, filterInput, statusFilter, sensorTypeFilter]);
 
   return (
     <div
