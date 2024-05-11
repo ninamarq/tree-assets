@@ -27,6 +27,7 @@ const getParentPrior = (
     return getParentPrior(tree, tree?.[parent?.locationId]);
   }
 };
+
 const findLocationOrAsset = (unit: IAsset, tree: TFilterParams["tree"]) => {
   if (!unit) return {};
 
@@ -36,6 +37,7 @@ const findLocationOrAsset = (unit: IAsset, tree: TFilterParams["tree"]) => {
 
   return { [unit?.id]: tree?.[unit?.id] };
 };
+
 const filterAssetsAndLocationsByFilterInput = ({
   tree,
   locations,
@@ -57,4 +59,4 @@ const filterAssetsAndLocationsByFilterInput = ({
   }
 };
 
-export { filterAssetsAndLocationsByFilterInput };
+export { filterAssetsAndLocationsByFilterInput, findLocationOrAsset };

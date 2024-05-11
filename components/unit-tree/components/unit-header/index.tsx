@@ -52,7 +52,10 @@ const UnitHeader = () => {
   };
 
   return (
-    <div style={{ ...commonSpanStyle, justifyContent: "space-between" }}>
+    <div
+      className="unit-tree-header-containers"
+      style={{ ...commonSpanStyle, justifyContent: "space-between" }}
+    >
       <span style={commonSpanStyle}>
         <h2>Ativos</h2>
         <p
@@ -63,7 +66,7 @@ const UnitHeader = () => {
           / {searchParams.get("companyName")}
         </p>
       </span>
-      <div style={commonSpanStyle}>
+      <div className="unit-tree-header-containers" style={commonSpanStyle}>
         <button
           className="filter-button-tree"
           style={{

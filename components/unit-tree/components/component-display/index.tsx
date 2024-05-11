@@ -51,15 +51,7 @@ const ComponentDisplay = () => {
           padding: "32px",
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 2fr",
-            gridTemplateRows: "1fr",
-            alignItems: "center",
-            gap: "24px",
-          }}
-        >
+        <div id="display-unit-grid">
           <ImageSimulation sensorType={currentComponent?.sensorType} />
           <div
             style={{ display: "flex", flexDirection: "column", gap: "24px" }}
@@ -125,15 +117,7 @@ const ComponentDisplay = () => {
             gridTemplateRows: "1fr",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "flex-start",
-              gap: "16px",
-            }}
-          >
+          <div className="unit-ids-display">
             <h4>Sensor</h4>
             <span
               style={{ display: "flex", color: "var(--gray-350)", gap: "8px" }}
@@ -142,15 +126,7 @@ const ComponentDisplay = () => {
               {currentComponent?.sensorId || "Sem informação"}
             </span>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "flex-start",
-              gap: "16px",
-            }}
-          >
+          <div className="unit-ids-display">
             <h4>Receptor</h4>
             <span
               style={{ display: "flex", color: "var(--gray-350)", gap: "8px" }}

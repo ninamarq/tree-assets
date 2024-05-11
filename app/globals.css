@@ -61,15 +61,55 @@ button.filter-button-tree:hover {
   transition: 0.5s;
 }
 
+section#display-unit-tree {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  gap: 8px;
+  min-height: 80vh;
+}
+
+div#display-unit-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+div.unit-ids-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+}
+
 @media screen and (max-width: 600px) {
   header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-
   header #companies-card-container {
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  div.unit-tree-header-containers {
+    flex-direction: column;
+  }
+
+  div.unit-ids-display {
+    min-width: 90px;
+    font-size: smaller;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  section#display-unit-tree,
+  div#display-unit-grid {
+    display: flex;
+    flex-direction: column-reverse;
   }
 }
