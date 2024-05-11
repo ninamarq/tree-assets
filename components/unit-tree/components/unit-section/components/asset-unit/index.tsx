@@ -8,6 +8,11 @@ interface IAssetUnitProps {
 }
 
 const AssetUnit: React.FC<IAssetUnitProps> = (props: IAssetUnitProps) => {
+  const statusColor =
+    props.asset.status === "operating"
+      ? "var(--primary-green-color)"
+      : "var(--primary-red-color)";
+
   return (
     <div
       style={{
@@ -25,6 +30,16 @@ const AssetUnit: React.FC<IAssetUnitProps> = (props: IAssetUnitProps) => {
         priority
       />
       {props.asset.name}
+      {props.asset.status && (
+        <div
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: "100%",
+            background: statusColor,
+          }}
+        />
+      )}
     </div>
   );
 };
