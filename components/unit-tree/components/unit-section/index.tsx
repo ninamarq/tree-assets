@@ -53,6 +53,8 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
             src={Arrow}
             onClick={() => setIsChildrenVisible((prevState) => !prevState)}
             width={12}
+            priority
+            loading="eager"
             style={{
               ...(!isChildrenVisible && { transform: "rotate(-90deg)" }),
               cursor: "pointer",
