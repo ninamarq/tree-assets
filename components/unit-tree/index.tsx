@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useSearchParams } from "next/navigation";
-import { TreeRender } from "./components";
+import { ComponentDisplay, TreeRender } from "./components";
 
 const UnitTree = () => {
   const searchParams = useSearchParams();
@@ -43,7 +43,7 @@ const UnitTree = () => {
         }}
       >
         <TreeRender />
-        <div style={{ border: "1px solid var(--gray-150)" }}>aaa</div>
+        <ComponentDisplay />
       </section>
     </main>
   );
