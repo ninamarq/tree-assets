@@ -77,7 +77,13 @@ const UnitHeader = () => {
             setSearchParam("sensorType", "energy");
           }}
         >
-          <BoltOutlinedSvg color={selectedColors.color} />
+          <BoltOutlinedSvg
+            color={
+              searchParams.get("sensorType") === "energy"
+                ? selectedColors.color
+                : "var(--primary-blue-color)"
+            }
+          />
           <h3>Sensor de energia</h3>
         </button>
         <button
@@ -93,7 +99,13 @@ const UnitHeader = () => {
             setSearchParam("status", "alert");
           }}
         >
-          <InfoSvg color={selectedColors.color} />
+          <InfoSvg
+            color={
+              searchParams.get("status") === "alert"
+                ? selectedColors.color
+                : "var(--primary-blue-color)"
+            }
+          />
           <h3>Crítico</h3>
         </button>
       </div>
