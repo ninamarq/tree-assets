@@ -6,6 +6,7 @@ import {
 } from "@/hooks";
 import UnitSection from "../unit-section";
 import SearchIcon from "@/assets/search.svg";
+import ProgressIcon from "@/assets/progress.svg";
 import { memo, useMemo } from "react";
 import Image from "next/image";
 import FilterInput from "../filter-input";
@@ -89,6 +90,8 @@ const TreeRender = () => {
         style={{
           display: "flex",
           flexDirection: "column",
+          alignItems: isPending ? "center" : "flex-start",
+          justifyContent: "flex-start",
           gap: "8px",
           height: "100%",
           padding: "8px 16px",
@@ -96,14 +99,13 @@ const TreeRender = () => {
         }}
       >
         {isPending ? (
-          <span
+          <Image
+            alt="Progress bar tree"
+            src={ProgressIcon}
             style={{
-              backgroundColor: "var(--gray-150)",
-              padding: "16px",
-              borderRadius: "2px",
-              width: "100%",
+              width: "30px",
               height: "100%",
-              animation: "shimmer 2s infinite",
+              animation: "progress 2s infinite",
             }}
           />
         ) : (

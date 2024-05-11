@@ -44,6 +44,17 @@ body {
   }
 }
 
+@keyframes progress {
+  0% {
+    opacity: 0.5;
+    rotate: calc(45deg);
+  }
+  100% {
+    rotate: calc(180deg);
+    opacity: 1;
+  }
+}
+
 button.filter-button-tree {
   background-color: transparent;
   border: 1px solid var(--gray-150);
