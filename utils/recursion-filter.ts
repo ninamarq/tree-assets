@@ -1,17 +1,15 @@
-import { IAsset, ILocation } from "@/types";
+import { IAsset } from "@/types";
 
 type TFilterParams = {
   filterInput: string;
   tree?: Record<string, IAsset>;
-  locations?: Array<ILocation>;
-  assets?: Array<IAsset>;
 };
 
-const getParentPrior = (
+const getPriorParentRecursion = (
   tree: TFilterParams["tree"],
   parent?: IAsset
 ): Partial<IAsset | undefined> => {
-  if (!parent?.id) return {};
+  if (!parent?.id || !tree) return {};
   if (tree?.[parent?.id]) {
     tree[parent.id].isOpened = true;
   }
@@ -20,19 +18,19 @@ const getParentPrior = (
     return { [parent.id]: { ...parent, isOpened: true } };
   }
 
-  if (parent?.parentId) {
-    return getParentPrior(tree, tree?.[parent?.parentId]);
+  const parentId = parent.parentId || parent.locationId || "";
+  if (tree[parentId]) {
+    tree[parentId].children = [parent];
   }
-  if (parent?.locationId) {
-    return getParentPrior(tree, tree?.[parent?.locationId]);
-  }
+
+  return getPriorParentRecursion(tree, tree?.[parentId]);
 };
 
-const findLocationOrAsset = (unit: IAsset, tree: TFilterParams["tree"]) => {
+const getFilteredTree = (unit?: IAsset, tree?: TFilterParams["tree"]) => {
   if (!unit) return {};
 
   if (unit?.parentId || unit?.locationId) {
-    return getParentPrior(tree, unit);
+    return getPriorParentRecursion(tree, unit);
   }
 
   return { [unit?.id]: tree?.[unit?.id] };
@@ -40,23 +38,16 @@ const findLocationOrAsset = (unit: IAsset, tree: TFilterParams["tree"]) => {
 
 const filterAssetsAndLocationsByFilterInput = ({
   tree,
-  locations,
-  assets,
   filterInput,
 }: TFilterParams) => {
-  const filteredLocation = locations?.find((location) =>
-    location.name.toLowerCase().includes(filterInput.toLowerCase())
-  );
-  if (filteredLocation && tree?.[filteredLocation?.id]) {
-    return findLocationOrAsset(filteredLocation, tree);
-  }
+  if (!tree) return {};
 
-  const filteredAsset = assets?.find((asset) =>
-    asset.name.toLowerCase().includes(filterInput.toLowerCase())
+  const filterInputToLowerCase = filterInput.toLowerCase();
+  const filteredUnit = Object.values(tree)?.find((unit) =>
+    unit?.name?.toLocaleLowerCase().includes(filterInputToLowerCase)
   );
-  if (filteredAsset && tree?.[filteredAsset?.id]) {
-    return findLocationOrAsset(filteredAsset, tree);
-  }
+
+  return getFilteredTree(filteredUnit, tree);
 };
 
-export { filterAssetsAndLocationsByFilterInput, findLocationOrAsset };
+export { filterAssetsAndLocationsByFilterInput };

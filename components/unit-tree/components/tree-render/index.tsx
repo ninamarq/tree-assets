@@ -46,9 +46,7 @@ const TreeRender = () => {
 
     if (filterInput) {
       return filterAssetsAndLocationsByFilterInput({
-        assets,
-        locations,
-        tree: filteredTree,
+        tree: { ...filteredTree },
         filterInput,
       });
     }
@@ -61,7 +59,7 @@ const TreeRender = () => {
       }
     }
     return filteredTree;
-  }, [assets, locations, tree, filterInput, statusFilter, sensorTypeFilter]);
+  }, [tree, filterInput, statusFilter, sensorTypeFilter]);
 
   return (
     <div
