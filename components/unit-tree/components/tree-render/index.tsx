@@ -27,7 +27,7 @@ const TreeRender = () => {
   });
 
   const filteredAssetsAndLocationsTree = useMemo(() => {
-    let filteredTree = { ...tree };
+    const filteredTree = { ...tree };
 
     if (statusFilter) {
       for (const unit in filteredTree) {
@@ -45,8 +45,10 @@ const TreeRender = () => {
     }
 
     if (filterInput) {
+      const copyFilteredTreeToBeFiltered = structuredClone(filteredTree);
+
       return filterAssetsAndLocationsByFilterInput({
-        tree: { ...filteredTree },
+        tree: copyFilteredTreeToBeFiltered,
         filterInput,
       });
     }
