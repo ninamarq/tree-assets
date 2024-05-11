@@ -12,6 +12,7 @@ const ComponentDisplay = () => {
   const { data: tree } = useMapTree({
     currentCompanyId: searchParams.get("companyId") || "",
   });
+
   const currentComponent = tree?.[searchParams.get("selectedUnit") || ""];
   const statusColor =
     currentComponent?.status === "operating"

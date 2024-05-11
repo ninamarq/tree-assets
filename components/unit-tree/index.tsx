@@ -1,10 +1,7 @@
 import { memo } from "react";
-import { useSearchParams } from "next/navigation";
-import { ComponentDisplay, TreeRender } from "./components";
+import { ComponentDisplay, TreeRender, UnitHeader } from "./components";
 
 const UnitTree = () => {
-  const searchParams = useSearchParams();
-
   return (
     <main
       style={{
@@ -17,22 +14,7 @@ const UnitTree = () => {
         cursor: "default",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-        }}
-      >
-        <h2>Ativos</h2>
-        <span
-          style={{
-            color: "var(--gray-250)",
-          }}
-        >
-          / {searchParams.get("companyName")}
-        </span>
-      </div>
+      <UnitHeader />
       <section
         style={{
           display: "grid",

@@ -44,6 +44,23 @@ body {
   }
 }
 
+button.filter-button-tree {
+  background-color: transparent;
+  border: 1px solid var(--gray-150);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 3px;
+  padding: 6px 16px 6px 14px;
+  color: var(--gray-250);
+  transition: 0.5s;
+  cursor: pointer;
+}
+button.filter-button-tree:hover {
+  background-color: var(--gray-150);
+  transition: 0.5s;
+}
+
 @media screen and (max-width: 600px) {
   header {
     flex-direction: column;
