@@ -1,6 +1,5 @@
 import { companiesMock } from "./companies";
-import { assetsMock } from "./assets";
-import { locationsMock } from "./locations";
+import assetsAndLocationsMock from "./api-data.json";
 import { IAsset } from "@/types";
 
 const getEquipmentTypeMock = (sensorType: IAsset["sensorType"]) => {
@@ -24,8 +23,7 @@ const getResponsibleLabelMock = (sensorType: IAsset["sensorType"]) => {
 
 export {
   companiesMock,
-  assetsMock,
-  locationsMock,
+  assetsAndLocationsMock,
   getEquipmentTypeMock,
   getResponsibleLabelMock,
 };
