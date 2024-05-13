@@ -29,7 +29,8 @@ const AssetUnit: React.FC<IAssetUnitProps> = (props: IAssetUnitProps) => {
   const { setSearchParam } = useSetSearchParamsQuery();
   const isAssetSelected = searchParams.get("selectedUnit") === props.asset.id;
   const hasParent = props.asset?.parentId || props.asset?.locationId;
-  const isAssetClickable = props.asset.status || !hasParent;
+  const isAssetClickable =
+    props.asset.status || !hasParent || props.asset?.children?.length === 0;
   const statusColor =
     props.asset.status === "operating"
       ? "var(--primary-green-color)"

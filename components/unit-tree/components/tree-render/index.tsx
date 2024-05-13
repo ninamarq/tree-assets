@@ -93,7 +93,8 @@ const TreeRender = () => {
           alignItems: isPending ? "center" : "flex-start",
           justifyContent: "flex-start",
           gap: "8px",
-          height: "100%",
+          height: "80vh",
+          overflowY: "auto",
           padding: "8px 16px",
           border: "1px solid var(--gray-150)",
         }}
