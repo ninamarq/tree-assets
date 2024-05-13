@@ -17,7 +17,7 @@ const TreeHeader = () => {
         <span
           style={{
             backgroundColor: "var(--secondary-blue-color)",
-            padding: "16px",
+            padding: "12px",
             height: "20px",
             borderRadius: "2px",
             width: "300px",
@@ -65,6 +65,7 @@ const TreeHeader = () => {
         priority
         loading="eager"
         width={100}
+        height={20}
       />
       <div
         id="companies-card-container"

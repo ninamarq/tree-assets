@@ -31,18 +31,12 @@ export default function useMapTree({
 
     for (const unitId in mappedHash) {
       const currentUnit = mappedHash[unitId];
+      const parentId = currentUnit?.parentId || currentUnit?.locationId || "";
 
-      if (currentUnit.parentId) {
-        const currentParent = mappedHash[currentUnit.parentId];
+      if (parentId) {
+        const currentParent = mappedHash[parentId];
         if (currentParent) {
           currentParent.children?.push(currentUnit);
-        }
-      }
-
-      if (currentUnit.locationId) {
-        const currentLocation = mappedHash[currentUnit.locationId];
-        if (currentLocation) {
-          currentLocation.children?.push(currentUnit);
         }
       }
     }
