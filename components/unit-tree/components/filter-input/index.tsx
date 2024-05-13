@@ -37,6 +37,7 @@ const FilterInput = () => {
         border: "none",
         padding: "8px",
         backgroundColor: "var(--white)",
+        color: "var(--primary-black-color)",
       }}
     />
   );

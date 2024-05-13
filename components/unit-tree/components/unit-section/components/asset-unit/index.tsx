@@ -53,7 +53,7 @@ const AssetUnit: React.FC<IAssetUnitProps> = (props: IAssetUnitProps) => {
         backgroundColor: isAssetSelected
           ? "var(--primary-blue-color)"
           : "var(--white)",
-        color: isAssetSelected ? "var(--white)" : "var(--black)",
+        color: isAssetSelected ? "var(--white)" : "var(--primary-black-color)",
       }}
     >
       <AssetSVG

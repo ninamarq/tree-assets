@@ -54,7 +54,9 @@ const ComponentUnit: React.FC<IComponentUnitProps> = (
         backgroundColor: isComponentSelected
           ? "var(--primary-blue-color)"
           : "var(--white)",
-        color: isComponentSelected ? "var(--white)" : "var(--black)",
+        color: isComponentSelected
+          ? "var(--white)"
+          : "var(--primary-black-color)",
       }}
       onClick={() => setSearchParam("selectedUnit", props.component.id)}
     >
