@@ -34,7 +34,7 @@ Here we have the results obtained.
 ![image](https://github.com/ninamarq/tree-assets/assets/73175981/2c42b567-5058-4581-8b86-8d7459b43e95)
 
 ### Tree with input filter
-![image](https://github.com/ninamarq/tree-assets/assets/73175981/8e272b50-f47b-44db-860b-8c8036e10abb)
+![image](https://github.com/ninamarq/tree-assets/assets/73175981/1b8b2aeb-5a69-46eb-a191-574ef6270cb0)
 
 ### Tree with energy sensor type selected filter
 ![image](https://github.com/ninamarq/tree-assets/assets/73175981/f69f5e38-731b-49b2-aa72-2e6d365c441c)
