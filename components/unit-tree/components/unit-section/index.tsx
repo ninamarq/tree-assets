@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import Arrow from "@/assets/down-arrow.svg";
 import Image from "next/image";
 import { LocationUnit, AssetUnit, ComponentUnit } from "./components";
@@ -14,23 +14,35 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
   const filterInput = searchParams.get("filterInput") || "";
 
   const [isChildrenVisible, setIsChildrenVisible] = useState<boolean>(false);
+
   const hasChildren = props.unit?.children?.length > 0;
   const typeHashRender = {
     location: () => <LocationUnit location={props.unit as ILocation} />,
     asset: () => <AssetUnit asset={props.unit as IAsset} />,
     component: () => <ComponentUnit component={props.unit as IAsset} />,
   };
-
+  const hideUnit = useMemo(() => {
+    if (
+      !props.unit.isOpened &&
+      !props.unit.name.toLowerCase().includes(filterInput)
+    ) {
+      return true;
+    }
+    return false;
+  }, [filterInput]);
   useEffect(() => {
+    if (!filterInput) return;
+
     if (props.unit.isOpened) {
       setIsChildrenVisible(true);
+      return;
     }
   }, [filterInput]);
 
   return (
     <div
       style={{
-        display: "flex",
+        display: hideUnit ? "none" : "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "flex-start",
@@ -51,7 +63,9 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
           <Image
             alt="Arrow drop children icon"
             src={Arrow}
-            onClick={() => setIsChildrenVisible((prevState) => !prevState)}
+            onClick={() => {
+              setIsChildrenVisible((prevState) => !prevState);
+            }}
             width={12}
             priority
             loading="eager"

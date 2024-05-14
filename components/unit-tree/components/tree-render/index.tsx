@@ -11,6 +11,7 @@ import { memo, useMemo } from "react";
 import Image from "next/image";
 import FilterInput from "../filter-input";
 import { filterAssetsAndLocationsByFilterInput } from "@/utils/recursion-filter";
+import { IAsset } from "@/types";
 
 const TreeRender = () => {
   const searchParams = useSearchParams();
@@ -27,7 +28,7 @@ const TreeRender = () => {
     currentCompanyId: companyId,
   });
 
-  const filteredAssetsAndLocationsTree = useMemo(() => {
+  const filteredAssetsAndLocationsTree = useMemo((): Record<string, IAsset> => {
     const filteredTree = { ...tree };
 
     if (statusFilter) {
@@ -111,7 +112,7 @@ const TreeRender = () => {
           />
         ) : (
           Object.values(filteredAssetsAndLocationsTree || {})?.map((value) => (
-            <UnitSection key={value?.id} unit={value} />
+            <UnitSection key={`${value?.id}-${value?.isOpened}`} unit={value} />
           ))
         )}
       </div>
