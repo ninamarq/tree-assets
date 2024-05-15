@@ -1,15 +1,20 @@
 import Image from "next/image";
-import { useGetCompanies, useSetSearchParamsQuery } from "@/hooks";
+import { useSetSearchParamsQuery } from "@/hooks";
 import TractianLogo from "@/assets/tractian.svg";
 import { useEffect, useMemo } from "react";
 import { CompanyCard } from "@/components";
 import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getCompanies } from "@/services";
 
 const TreeHeader = () => {
   const searchParams = useSearchParams();
 
   const { updateHeaderParams } = useSetSearchParamsQuery();
-  const { data: companies, isFetching } = useGetCompanies();
+  const { data: companies, isFetching } = useQuery({
+    queryKey: ["companies-data"],
+    queryFn: () => getCompanies(),
+  });
 
   const renderCompaniesData = useMemo(() => {
     if (isFetching) {

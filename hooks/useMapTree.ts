@@ -47,10 +47,6 @@ export default function useMapTree({
   return useQuery({
     queryKey: ["mapped-tree", { currentCompanyId }],
     queryFn: () => getMappedTree(),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    retry: false,
     enabled: Boolean(currentCompanyId && locations && assets),
   });
 }

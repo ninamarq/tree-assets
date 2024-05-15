@@ -1,9 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import {
-  useGetCompanyAssets,
-  useGetCompanyAssetsLocations,
-  useMapTree,
-} from "@/hooks";
+import { useMapTree } from "@/hooks";
 import UnitSection from "../unit-section";
 import SearchIcon from "@/assets/search.svg";
 import ProgressIcon from "@/assets/progress.svg";
@@ -12,6 +8,8 @@ import Image from "next/image";
 import FilterInput from "../filter-input";
 import { filterAssetsAndLocationsByFilterInput } from "@/utils";
 import { IAsset } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { getCompanyAssets, getCompanyAssetsLocations } from "@/services";
 
 const TreeRender = () => {
   const searchParams = useSearchParams();
@@ -20,8 +18,16 @@ const TreeRender = () => {
   const statusFilter = searchParams.get("status") || "";
   const sensorTypeFilter = searchParams.get("sensorType") || "";
 
-  const { data: locations } = useGetCompanyAssetsLocations(companyId);
-  const { data: assets } = useGetCompanyAssets(companyId);
+  const { data: locations } = useQuery({
+    queryKey: ["company-locations-data", { companyId }],
+    queryFn: () => getCompanyAssetsLocations(companyId || ""),
+    enabled: !!companyId,
+  });
+  const { data: assets } = useQuery({
+    queryKey: ["company-assets-data", { companyId }],
+    queryFn: () => getCompanyAssets(companyId || ""),
+    enabled: !!companyId,
+  });
   const { data: tree, isPending } = useMapTree({
     locations,
     assets,
