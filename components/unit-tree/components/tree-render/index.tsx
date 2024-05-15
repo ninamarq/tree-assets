@@ -1,15 +1,14 @@
 import { useSearchParams } from "next/navigation";
 import { useMapTree } from "@/hooks";
-import UnitSection from "../unit-section";
 import SearchIcon from "@/assets/search.svg";
 import ProgressIcon from "@/assets/progress.svg";
 import { memo, useMemo } from "react";
 import Image from "next/image";
-import FilterInput from "../filter-input";
 import { filterAssetsAndLocationsByFilterInput } from "@/utils";
 import { IAsset } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { getCompanyAssets, getCompanyAssetsLocations } from "@/services";
+import { FilterInput, UnitSection } from "@/components/unit-tree/components";
 
 const TreeRender = () => {
   const searchParams = useSearchParams();
