@@ -10,7 +10,7 @@ import ProgressIcon from "@/assets/progress.svg";
 import { memo, useMemo } from "react";
 import Image from "next/image";
 import FilterInput from "../filter-input";
-import { filterAssetsAndLocationsByFilterInput } from "@/utils/recursion-filter";
+import { filterAssetsAndLocationsByFilterInput } from "@/utils";
 import { IAsset } from "@/types";
 
 const TreeRender = () => {

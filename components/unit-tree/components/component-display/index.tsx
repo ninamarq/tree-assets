@@ -1,11 +1,11 @@
 import { useMapTree } from "@/hooks";
-import { SensorIcon } from "@/utils";
 import { useSearchParams } from "next/navigation";
 import SensorSvg from "@/assets/sensor.svg";
 import ReceptorSvg from "@/assets/receptor.svg";
 import Image from "next/image";
 import { ImageSimulation } from "./components";
 import { getEquipmentTypeMock, getResponsibleLabelMock } from "@/mocks";
+import { SensorIcon } from "..";
 
 const ComponentDisplay = () => {
   const searchParams = useSearchParams();

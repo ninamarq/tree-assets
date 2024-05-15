@@ -1,7 +1,7 @@
 import ComponentIcon from "@/assets/components.svg";
 import { useSetSearchParamsQuery } from "@/hooks";
 import { IAsset } from "@/types";
-import { SensorIcon } from "@/utils";
+import { SensorIcon } from "@/components/unit-tree/components";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import React from "react";

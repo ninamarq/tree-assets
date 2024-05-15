@@ -39,4 +39,4 @@ const SensorIcon = ({
   return sensorIconHash[sensorType || "vibration"]();
 };
 
-export { SensorIcon };
+export default SensorIcon;
