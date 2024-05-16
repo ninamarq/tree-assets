@@ -36,10 +36,12 @@ const ComponentDisplay = () => {
         {currentComponent && (
           <>
             <h3>{currentComponent?.name}</h3>
-            <SensorIcon
-              sensorType={currentComponent?.sensorType!}
-              statusColor={statusColor}
-            />
+            {currentComponent.status && (
+              <SensorIcon
+                sensorType={currentComponent?.sensorType!}
+                statusColor={statusColor}
+              />
+            )}
           </>
         )}
       </header>
