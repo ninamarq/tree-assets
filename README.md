@@ -37,15 +37,13 @@ Here we have the results obtained.
 ![image](https://github.com/ninamarq/tree-assets/assets/73175981/1b8b2aeb-5a69-46eb-a191-574ef6270cb0)
 
 ### Tree with energy sensor type selected filter
-![image](https://github.com/ninamarq/tree-assets/assets/73175981/f69f5e38-731b-49b2-aa72-2e6d365c441c)
+![image](https://github.com/ninamarq/tree-assets/assets/73175981/73297d96-419a-4278-be77-b6bd938d02f1)
 
 ### Tree with alert status selected filter
-![image](https://github.com/ninamarq/tree-assets/assets/73175981/22b540f4-3c30-4055-af8e-62128a0d1760)
+![image](https://github.com/ninamarq/tree-assets/assets/73175981/559f2e27-ddea-47e5-9fd3-08a7a7b3748f)
 
 ### Display of asset selected
 ![image](https://github.com/ninamarq/tree-assets/assets/73175981/547a98f4-b2c3-44dc-8592-7bd58d39e70d)
-
-![image](https://github.com/ninamarq/tree-assets/assets/73175981/e1424729-3867-49a3-94c5-1093c9eef583)
 
 ### Responsive layout when using in mobile
 <img src="https://github.com/ninamarq/tree-assets/assets/73175981/d11819cd-0241-4b86-9e91-7e6eeb1b8f4b" height="400px" />
