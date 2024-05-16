@@ -14,7 +14,7 @@ export default function useSearchParamsQuery() {
   };
 
   const updateHeaderParams = (company: ICompany) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams();
     params.set("companyId", company.id);
     params.set("companyName", company.name);
 
