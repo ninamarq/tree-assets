@@ -1,21 +1,20 @@
 import { useSearchParams } from "next/navigation";
-import { useMapTree } from "@/hooks";
+import { useMapTree, useSearchParamsQuery } from "@/hooks";
 import SearchIcon from "@/assets/search.svg";
 import ProgressIcon from "@/assets/progress.svg";
 import { memo, useMemo } from "react";
 import Image from "next/image";
-import { filterAssetsAndLocationsByFilterInput } from "@/utils";
+import { filterTreeByParams } from "@/utils";
 import { IAsset } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { getCompanyAssets, getCompanyAssetsLocations } from "@/services";
 import { FilterInput, UnitSection } from "@/components/unit-tree/components";
 
 const TreeRender = () => {
+  const { getFiltersParams } = useSearchParamsQuery();
   const searchParams = useSearchParams();
   const companyId = searchParams.get("companyId") || "";
-  const filterInput = searchParams.get("filterInput") || "";
-  const statusFilter = searchParams.get("status") || "";
-  const sensorTypeFilter = searchParams.get("sensorType") || "";
+  const filtersParams = getFiltersParams();
 
   const { data: locations } = useQuery({
     queryKey: ["company-locations-data", { companyId }],
@@ -34,41 +33,28 @@ const TreeRender = () => {
   });
 
   const filteredAssetsAndLocationsTree = useMemo((): Record<string, IAsset> => {
-    const filteredTree = { ...tree };
+    let filteredTree = { ...tree };
 
-    if (statusFilter) {
-      for (const unit in filteredTree) {
-        if (filteredTree[unit]?.status !== statusFilter) {
-          delete filteredTree[unit];
-        }
-      }
-    }
-    if (sensorTypeFilter) {
-      for (const unit in filteredTree) {
-        if (filteredTree[unit]?.sensorType !== sensorTypeFilter) {
-          delete filteredTree[unit];
-        }
-      }
-    }
+    for (let key in filtersParams) {
+      if (!filtersParams[key]) continue;
 
-    if (filterInput) {
       const copyFilteredTreeToBeFiltered = structuredClone(filteredTree);
-
-      return filterAssetsAndLocationsByFilterInput({
+      const filteredTreeByParam = filterTreeByParams({
         tree: copyFilteredTreeToBeFiltered,
-        filterInput,
+        filter: { type: key, value: filtersParams[key] },
       });
+
+      filteredTree = { ...filteredTree, ...filteredTreeByParam };
     }
 
-    if (!sensorTypeFilter && !statusFilter) {
-      for (const unit in filteredTree) {
-        if (filteredTree[unit].parentId || filteredTree[unit].locationId) {
-          delete filteredTree[unit];
-        }
+    for (const unit in filteredTree) {
+      if (filteredTree[unit].parentId || filteredTree[unit].locationId) {
+        delete filteredTree[unit];
       }
     }
+
     return filteredTree;
-  }, [tree, filterInput, statusFilter, sensorTypeFilter]);
+  }, [tree, filtersParams]);
 
   return (
     <div

@@ -1,4 +1,4 @@
-import { filterAssetsAndLocationsByFilterInput } from "./recursion-filter";
+import { filterTreeByParams } from "./recursion-filter";
 
 const debounce = (callback: () => void, delay: number) => {
   let timeoutId: string | number | NodeJS.Timeout | undefined;
@@ -8,4 +8,4 @@ const debounce = (callback: () => void, delay: number) => {
   };
 };
 
-export { debounce, filterAssetsAndLocationsByFilterInput };
+export { debounce, filterTreeByParams };

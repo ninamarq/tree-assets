@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useSetSearchParamsQuery } from "@/hooks";
+import { useSearchParamsQuery } from "@/hooks";
 import TractianLogo from "@/assets/tractian.svg";
 import { useEffect, useMemo } from "react";
 import { CompanyCard } from "@/components";
@@ -10,7 +10,7 @@ import { getCompanies } from "@/services";
 const TreeHeader = () => {
   const searchParams = useSearchParams();
 
-  const { updateHeaderParams } = useSetSearchParamsQuery();
+  const { updateHeaderParams } = useSearchParamsQuery();
   const { data: companies, isFetching } = useQuery({
     queryKey: ["companies-data"],
     queryFn: () => getCompanies(),

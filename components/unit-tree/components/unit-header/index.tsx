@@ -1,4 +1,4 @@
-import { useSetSearchParamsQuery } from "@/hooks";
+import { useSearchParamsQuery } from "@/hooks";
 import { useSearchParams } from "next/navigation";
 
 const BoltOutlinedSvg = ({ color }: { color: string }) => {
@@ -40,7 +40,7 @@ const InfoSvg = ({ color }: { color: string }) => {
 
 const UnitHeader = () => {
   const searchParams = useSearchParams();
-  const { setSearchParam } = useSetSearchParamsQuery();
+  const { setSearchParam } = useSearchParamsQuery();
   const commonSpanStyle = {
     display: "flex",
     alignItems: "center",

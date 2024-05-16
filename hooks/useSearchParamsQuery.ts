@@ -1,7 +1,7 @@
 import { ICompany } from "@/types";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
-export default function useSetSearchParamsQuery() {
+export default function useSearchParamsQuery() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -17,7 +17,6 @@ export default function useSetSearchParamsQuery() {
     const params = new URLSearchParams(searchParams.toString());
     params.set("companyId", company.id);
     params.set("companyName", company.name);
-    params.set("filterInput", "");
 
     const input = document.getElementById(
       "input-filter-tree"
@@ -30,5 +29,17 @@ export default function useSetSearchParamsQuery() {
     router.push(NEW_URL);
   };
 
-  return { setSearchParam, updateHeaderParams };
+  const getFiltersParams = (): Record<string, string> => {
+    const nameFilter = searchParams.get("name") || "";
+    const statusFilter = searchParams.get("status") || "";
+    const sensorTypeFilter = searchParams.get("sensorType") || "";
+
+    return {
+      status: statusFilter,
+      sensorType: sensorTypeFilter,
+      name: nameFilter,
+    };
+  };
+
+  return { setSearchParam, updateHeaderParams, getFiltersParams };
 }

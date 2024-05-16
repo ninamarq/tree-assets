@@ -1,4 +1,4 @@
 import useMapTree from "./useMapTree";
-import useSetSearchParamsQuery from "./useSetSearchParamsQuery";
+import useSearchParamsQuery from "./useSearchParamsQuery";
 
-export { useMapTree, useSetSearchParamsQuery };
+export { useMapTree, useSearchParamsQuery };

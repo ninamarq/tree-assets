@@ -1,5 +1,5 @@
 import ComponentIcon from "@/assets/components.svg";
-import { useSetSearchParamsQuery } from "@/hooks";
+import { useSearchParamsQuery } from "@/hooks";
 import { IAsset } from "@/types";
 import { SensorIcon } from "@/components/unit-tree/components";
 import Image from "next/image";
@@ -33,7 +33,7 @@ const ComponentUnit: React.FC<IComponentUnitProps> = (
   props: IComponentUnitProps
 ) => {
   const searchParams = useSearchParams();
-  const { setSearchParam } = useSetSearchParamsQuery();
+  const { setSearchParam } = useSearchParamsQuery();
 
   const isComponentSelected =
     searchParams.get("selectedUnit") === props.component.id;

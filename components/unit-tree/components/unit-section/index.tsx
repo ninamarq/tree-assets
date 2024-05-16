@@ -3,15 +3,15 @@ import Arrow from "@/assets/down-arrow.svg";
 import Image from "next/image";
 import { LocationUnit, AssetUnit, ComponentUnit } from "./components";
 import { IAsset, ILocation } from "@/types";
-import { useSearchParams } from "next/navigation";
+import { useSearchParamsQuery } from "@/hooks";
 
 interface IUnitSectionProps {
   unit: ILocation | IAsset;
 }
 
 const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
-  const searchParams = useSearchParams();
-  const filterInput = searchParams.get("filterInput") || "";
+  const { getFiltersParams } = useSearchParamsQuery();
+  const filtersParams = getFiltersParams();
 
   const [isChildrenVisible, setIsChildrenVisible] = useState<boolean>(false);
 
@@ -22,22 +22,37 @@ const UnitSection: React.FC<IUnitSectionProps> = (props: IUnitSectionProps) => {
     component: () => <ComponentUnit component={props.unit as IAsset} />,
   };
   const hideUnit = useMemo(() => {
-    if (
-      !props.unit.isOpened &&
-      !props.unit.name.toLowerCase().includes(filterInput)
-    ) {
+    const unit = props.unit as IAsset | undefined;
+
+    if (!unit) {
       return true;
     }
+
+    for (let key in filtersParams) {
+      const currentKey = key as keyof IAsset;
+
+      const unitValueToLowerCase = String(unit[currentKey])?.toLowerCase();
+      const filterValueToLowerCase = filtersParams[currentKey].toLowerCase();
+
+      if (
+        !unitValueToLowerCase.includes(filterValueToLowerCase) &&
+        !unit.isOpened
+      ) {
+        return true;
+      }
+    }
+
     return false;
-  }, [filterInput]);
+  }, [filtersParams]);
+
   useEffect(() => {
-    if (!filterInput) return;
+    if (!filtersParams) return;
 
     if (props.unit.isOpened) {
       setIsChildrenVisible(true);
       return;
     }
-  }, [filterInput]);
+  }, [filtersParams]);
 
   return (
     <div

@@ -1,7 +1,12 @@
 import { IAsset } from "@/types";
 
+type TFilterType = "name" | "status" | "sensorType";
+interface IFilter {
+  type: string;
+  value: string;
+}
 type TFilterParams = {
-  filterInput: string;
+  filter: IFilter;
   tree?: Record<string, IAsset>;
 };
 
@@ -22,16 +27,22 @@ const getPriorParentRecursion = (
   const parentId = parent.parentId || parent.locationId || "";
   return getPriorParentRecursion(tree, tree?.[parentId]);
 };
-const filterChildrenRecursion = (filterInput: string, child: IAsset) => {
+
+const filterChildrenRecursion = (filter: IFilter, child: IAsset) => {
   if (child && child?.children?.length === 0) return;
 
   const newChildren: Array<IAsset> = [];
   for (const element of child?.children) {
     if (element.children.length > 0) {
-      filterChildrenRecursion(filterInput, element);
+      filterChildrenRecursion(filter, element);
     }
 
-    if (element.name.toLowerCase().includes(filterInput)) {
+    const filterValueToLowerCase = filter.value.toLowerCase();
+    if (
+      (element as IAsset)[filter.type as TFilterType]
+        ?.toLowerCase()
+        .includes(filterValueToLowerCase)
+    ) {
       newChildren.push(element);
     }
   }
@@ -53,15 +64,17 @@ const getFilteredTree = (unit?: IAsset, tree?: TFilterParams["tree"]) => {
   return tree?.[unit?.id];
 };
 
-const filterAssetsAndLocationsByFilterInput = ({
+const filterTreeByParams = ({
   tree,
-  filterInput,
+  filter,
 }: TFilterParams): Record<string, IAsset> => {
   if (!tree) return {};
 
-  const filterInputToLowerCase = filterInput.toLowerCase();
+  const filterValueToLowerCase = filter.value.toLowerCase();
   const filteredUnits = Object.values(tree)?.filter((unit) =>
-    unit?.name?.toLocaleLowerCase().includes(filterInputToLowerCase)
+    unit?.[filter.type as TFilterType]
+      ?.toLocaleLowerCase()
+      .includes(filterValueToLowerCase)
   );
 
   let treeFiltered = {};
@@ -70,7 +83,7 @@ const filterAssetsAndLocationsByFilterInput = ({
     const unitToAnalyse = parentId ? tree?.[parentId] : unit;
 
     if (unitToAnalyse?.children?.length > 0) {
-      filterChildrenRecursion(filterInput, unitToAnalyse as IAsset);
+      filterChildrenRecursion(filter, unitToAnalyse as IAsset);
     }
 
     const parentPrior = getFilteredTree(unitToAnalyse, tree);
@@ -82,4 +95,4 @@ const filterAssetsAndLocationsByFilterInput = ({
   return treeFiltered;
 };
 
-export { filterAssetsAndLocationsByFilterInput };
+export { filterTreeByParams };

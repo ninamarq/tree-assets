@@ -1,4 +1,4 @@
-import { useSetSearchParamsQuery } from "@/hooks";
+import { useSearchParamsQuery } from "@/hooks";
 import { IAsset } from "@/types";
 import { useSearchParams } from "next/navigation";
 import React from "react";
@@ -26,7 +26,7 @@ interface IAssetUnitProps {
 
 const AssetUnit: React.FC<IAssetUnitProps> = (props: IAssetUnitProps) => {
   const searchParams = useSearchParams();
-  const { setSearchParam } = useSetSearchParamsQuery();
+  const { setSearchParam } = useSearchParamsQuery();
   const isAssetSelected = searchParams.get("selectedUnit") === props.asset.id;
   const hasParent = props.asset?.parentId || props.asset?.locationId;
   const isAssetClickable =

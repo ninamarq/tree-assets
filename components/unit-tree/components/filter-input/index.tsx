@@ -1,15 +1,15 @@
-import { useSetSearchParamsQuery } from "@/hooks";
+import { useSearchParamsQuery } from "@/hooks";
 import { debounce } from "@/utils";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 const FilterInput = () => {
   const searchParams = useSearchParams();
-  const { setSearchParam } = useSetSearchParamsQuery();
+  const { setSearchParam } = useSearchParamsQuery();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    setSearchParam("filterInput", value);
+    setSearchParam("name", value);
   };
   const handleInputChangeDebounced = debounce(
     handleInputChange as () => void,
@@ -17,12 +17,12 @@ const FilterInput = () => {
   );
 
   useEffect(() => {
-    const filterInputValue = searchParams.get("filterInput");
-    if (filterInputValue) {
+    const nameInputValue = searchParams.get("name");
+    if (nameInputValue) {
       const input = document.getElementById(
         "input-filter-tree"
       ) as HTMLInputElement;
-      input.value = filterInputValue;
+      input.value = nameInputValue;
     }
   }, []);
 
